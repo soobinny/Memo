@@ -5,9 +5,7 @@ import com.example.memo.dto.MemoResponseDto;
 import com.example.memo.entity.Memo;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/memos")
@@ -30,6 +28,23 @@ public class MemoController {
         memoList.put(memoId, memo);
 
         return new MemoResponseDto(memo);
+    }
+
+    //메모 목록 조회
+    @GetMapping
+    public List<MemoResponseDto> findAllMemos() {
+
+        //List 초기화
+        List<MemoResponseDto> responseList = new ArrayList<>();
+
+        //HashMap<Memo> -> List<MemoResponseDto> 방법 (1)
+        for (Memo memo : memoList.values()) {
+            MemoResponseDto responseDto = new  MemoResponseDto(memo);
+            responseList.add(responseDto);
+        }
+        //Map to List 방법 (2)
+        // responseList = memoList.values().stream().map(MemoResponseDto::new).collect(Collectors.toList());
+        return responseList;
     }
 
     //메모 조회 기능
