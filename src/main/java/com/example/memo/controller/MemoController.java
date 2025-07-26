@@ -63,15 +63,30 @@ public class MemoController {
         return new ResponseEntity<>(new MemoResponseDto(memo), HttpStatus.OK);
     }
 
-    //메모 수정 기능
-    public MemoResponseDto updateMemoById(
+    //메모 전체 수정 기능
+    @PutMapping("/{id}")
+    public ResponseEntity<MemoResponseDto> updateMemo(
             @PathVariable Long id,
-            @RequestBody MemoRequestDto dto
+            @RequestBody MemoRequestDto requestDto
     ) {
-        Memo memo = memoList.get(id);
-        memo.update(dto);
 
-        return new MemoResponseDto(memo);
+        Memo memo = memoList.get(id);
+
+        // NPE 방지
+        if (memo == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        // 필수값 검증
+        if (requestDto.getTitle() == null || requestDto.getContents() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        // memo 수정
+        memo.update(requestDto);
+
+        // 응답
+        return new ResponseEntity<>(new MemoResponseDto(memo), HttpStatus.OK);
     }
 
     //메모 삭제 기능
