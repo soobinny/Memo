@@ -30,8 +30,9 @@ DTO를 통한 요청/응답 분리, Entity 설계, RESTful 컨트롤러 구현 �
 - 메모 삭제 (Delete): ID로 특정 메모를 삭제  
 - ID 자동 생성: 가장 큰 ID 값을 기준으로 1씩 증가하며 관리  
 - 유효하지 않은 ID 요청 시 예외 응답 반환 처리 구현
-  
 
+  
+```
 ## 클래스 구조
 
 memo/
@@ -43,3 +44,4 @@ memo/
 │ └── MemoResponseDto.java : 메모 응답 DTO
 └── entity/
 └── Memo.java : 메모 데이터 모델 클래스
+```
